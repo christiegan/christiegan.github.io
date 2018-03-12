@@ -1,0 +1,79 @@
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Christie Gan" />
+
+<meta name="date" content="2018-03-11" />
+
+<title>Cheat Sheet in DataFrames: Python Pandas</title>
+</head>
+
+<body>
+  <div>
+    <h1>Cheat Sheet in DataFrames: Python Pandas</h1>
+    <h3>3/11/2018</h3>
+    <h3>Christie Gan</h3>
+    <br>
+    <br>
+    <h3>Set Up</h3>
+
+    <p>There are many types of data structures in python, such as Series, Lists, and Dictionaries. In this article, we’ll be focusing on DataFrames in python’s pandas package. DataFrames are a two-dimensional data structure with columns that can have different data types, similar to a spreadsheet. This structure is very commonly used in data manipulation due to its flexibility. It can give summary statistics about the overall data, can be separated, joined, and added to. To begin, import the package.</p>
+
+    <p><i>import pandas as pd</i></p>
+
+    <p>There are several different ways to create a brand new dataframe, depending on the data you want to put in it. If you are inserting the data values one by one manually, and want indices default generated, the syntax is:</p>
+
+    <p><i>df_name = {'column_name1' : [data1, data2, data3, data4], 'column_name2' : [data1, data2, data3, data4]}</i></p>
+
+    <p>If you are creating a dataframe using Series for each column, then the syntax is:</p>
+
+    <p><i>df_name = {'column_name1' : pd.Series([data1, data2, data3], index=['a', 'b', 'c']), 'column_name2': pd.Series([data1, data2, data3, data4], index=['a', 'b', 'c', 'd'])}</i></p>
+
+    <p>As seen here, the indices are determined from the Series. The values are mapped to its corresponding index. If the Series do not have the same number of values, the missing number for an index will be labelled as NaN. If indices are not specified, it will be numerical, starting from 0.</p>
+
+    <p>If you are creating a dataframe using a list of dictionaries, then the syntax is:</p>
+
+    <p><i>df_name = [{'column_name1': data1, 'column_name2': data2}, {'column_name1': data1, 'column_name2': data2, 'column_name3': data3}]</i></p>
+
+    <p>But the most common way to create a dataframe in data science is to load raw data into a table and convert it into a dataframe. Raw data is often compiled in a separate file such as csv, tsv, txt, etc. This makes it easier to clean and process later. To load the data:</p>
+
+    <p><i>data_name = pd.read_table("file_name.csv")</i></p>
+
+    <p>This usually converts the dataset into a dataframe automatically. In any other case, to convert into dataframe uses:</p>
+
+    <p><i>df_name = pd.DataFrame(data=data_name, columns = data_name.columns.values)</i></p>
+    <br>
+    <br>
+    <h3>Basic Statistics</h3>
+    <ul>
+    <li>To get the number of rows in a dataframe, use df_name.shape[0]</li>
+    <li>To get the number of columns in a dataframe, use df_name.shape[1]</li>
+    <li>To get both at the same time, use df_name.shape</li>
+    <br>
+    <li>To get the data type of a column, use df_name[‘column_name’].dtype</li>
+    <li>To get a summary of general stats (count, mean, standard deviation, min, 25% quartile, 50% quartile, 75% quartile, and max), use df_name.describe(). To extract certain states, it is possible to transpose the dataframe and select certain columns by doing df_na.describe().T[['min', 'max', 'mean']], for example.</li>
+    </ul>
+    <br>
+    <br>
+    <h3>Manipulation</h3>
+    <ul>
+    <li>Add a column to a dataframe: df_name[‘new_column’] = [list]</li>
+    <li>Drop a column on a dataframe: df_name.drop([‘unwanted_column’], axis=1)</li>
+
+    <li>Add row(s) to a dataframe: df_name.append(row or df2, columns=list(‘col1col2’), ignore_index=True) to reset the index to be sequential</li>
+    <li>Drop row(s) in a dataframe: df_name.drop([index1, index2])</li>
+
+    <li>Create a new sub-dataframe from an existing dataframe by selecting certain columns: df2 = df_name[[‘column1’, ‘column2’, ‘column3’]].copy()</li>
+
+    <li>Select rows or columns with particular labels from index: df_name.loc[<list row selection>, <list column selection>]</li>
+    <li>Select rows or columns with particular indices from index: df_name.iloc[<row slice>, <column slice>]. This means iloc only takes in integers. Ex: data.iloc[0:5, 5:8] is the first 5 rows and the 5th, 6th, and 7th columns of the dataframe.</li>
+
+    <li>To send a column of a dataframe to a function to be processed, use df_name[‘column_name’].apply(function_name)</li>
+    <li>To send every row of a dataframe to a function to be processed, use df_name.apply(function_name, axis=1)</li>
+    </ul>
+  </div>
+</body>
